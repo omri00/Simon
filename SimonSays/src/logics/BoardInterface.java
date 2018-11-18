@@ -2,7 +2,7 @@ package logics;
 
 public interface BoardInterface {
 	
-	public void activeColor(int color);
+	public void activeLight(int light);
 	public void deactiveAll();
 	public void activeAll();
 	public void setScore(int score);

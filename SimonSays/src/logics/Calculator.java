@@ -80,7 +80,7 @@ public class Calculator implements Runnable {
 			if (isPrinting()) {
 				nextColor = getNextColor();
 				if (nextColor != END_NUM) {
-					board.activeColor(nextColor);
+					board.activeLight(nextColor);
 				}
 				sleep(500);
 			}
@@ -90,7 +90,7 @@ public class Calculator implements Runnable {
 				}
 				int action;
 				nextColor = board.getPressedColor();
-				board.activeColor(nextColor);
+				board.activeLight(nextColor);
 				action = checkNextColor(nextColor);
 				if (action == Calculator.VICTORY_NUM) {
 					board.victory();

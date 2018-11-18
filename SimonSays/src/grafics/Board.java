@@ -59,9 +59,9 @@ public class Board extends JPanel implements BoardInterface {
 	}
 
 	@Override
-	public void activeColor(int color) {
-		imagesHandler.selectImage(color);
-		soundHandler.playColorSound(color);
+	public void activeLight(int light) {
+		imagesHandler.selectImage(light);
+		soundHandler.playColorSound(light);
 		repaint();
 	}
 
