@@ -32,6 +32,7 @@ public class SoundHandler {
 	}
 
 	public void playColorSound(int colorNum) {
+		colors[colorNum].stop();
 		colors[colorNum].setFramePosition(0);
 		colors[colorNum].start();
 	}
