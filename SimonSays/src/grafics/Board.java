@@ -36,6 +36,8 @@ public class Board extends JPanel implements BoardInterface {
 
 			public void mousePressed(MouseEvent e) {
 				if (!gameThread.isAlive()) {
+					pressed = false;
+					gameThread.interrupt();
 					gameThread = new Thread(calculator, "game");
 					gameThread.start();
 				} else if(!calculator.isPrinting()){

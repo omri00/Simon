@@ -65,8 +65,9 @@ public class Calculator implements Runnable {
 	}
 
 	public void resetGame() {
-		colorOrder.clear();
+		colorOrder = new ArrayList<Integer>();
 		printing = true;
+		placeInTurn = 0;
 		chooseNextColor();
 	}
 
