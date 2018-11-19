@@ -56,10 +56,12 @@ public class ElectronicBoard implements BoardInterface{
 
 	@Override
 	public void victory() {		
+		SmartDashboard.putString("Game state:", "Victory");
 	}
 
 	@Override
 	public void defeat() {
+		SmartDashboard.putString("Game state:", "Defeat");
 	}
 
 }

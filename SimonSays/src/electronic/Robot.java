@@ -8,6 +8,7 @@
 package electronic;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import logics.Calculator;
 
 /**
@@ -81,6 +82,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		new Thread(calculator).start();
+		SmartDashboard.putString("Game state:", "Running");
 	}
 
 	/**
