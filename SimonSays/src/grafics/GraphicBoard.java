@@ -1,4 +1,5 @@
 package grafics;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -12,6 +13,7 @@ import javax.swing.JPanel;
 
 import logics.BoardInterface;
 import logics.Calculator;
+import logics.Calculator.Difficulty;
 
 public class GraphicBoard extends JPanel implements BoardInterface {
 
@@ -24,10 +26,10 @@ public class GraphicBoard extends JPanel implements BoardInterface {
 	Thread gameThread;
 	JFrame frame;
 
-	public GraphicBoard(boolean inverted) {
+	public GraphicBoard(boolean inverted, Difficulty difficulty) {
 		soundHandler = new SoundHandler();
 		imagesHandler = new ImagesHandler(inverted);
-		calculator = new Calculator(4, this);
+		calculator = new Calculator(4, this, difficulty);
 		gameThread = new Thread(calculator, "game");
 		frame = new JFrame("Simon");
 		frame.setBounds(0, 0, 500, 500);
@@ -41,7 +43,7 @@ public class GraphicBoard extends JPanel implements BoardInterface {
 					gameThread.interrupt();
 					gameThread = new Thread(calculator, "game");
 					gameThread.start();
-				} else if(!calculator.isPrinting()){
+				} else if (!calculator.isPrinting()) {
 					pressedColor = imagesHandler.checkColor(e.getX(), e.getY());
 					if (pressedColor != ImagesHandler.NON_ACTIVE) {
 						pressed = true;
@@ -112,7 +114,7 @@ public class GraphicBoard extends JPanel implements BoardInterface {
 	}
 
 	public static void main(String[] args) {
-		GraphicBoard board = new GraphicBoard(false);
+		GraphicBoard board = new GraphicBoard(false, Difficulty.HARD);
 
 	}
 }

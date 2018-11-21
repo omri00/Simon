@@ -1,4 +1,5 @@
 package logics;
+
 import java.util.ArrayList;
 
 public class Calculator implements Runnable {
@@ -12,10 +13,26 @@ public class Calculator implements Runnable {
 	private int placeInTurn;
 	private boolean printing;
 	private BoardInterface board;
+	private Difficulty difficulty;
 
-	public Calculator(int buttonNum, BoardInterface board) {
+	public enum Difficulty {
+		EASY(750), MEDIUM(500), HARD(250);
+
+		private final int printSleepTime;
+
+		private Difficulty(int printSleepTime) {
+			this.printSleepTime = printSleepTime;
+		}
+
+		public int getPrintSleepTime() {
+			return printSleepTime;
+		}
+	}
+
+	public Calculator(int buttonNum, BoardInterface board, Difficulty difficulty) {
 		this.buttonNum = buttonNum;
 		this.board = board;
+		this.difficulty = difficulty;
 		colorOrder = new ArrayList<>();
 		chooseNextColor();
 		placeInTurn = 0;
@@ -83,9 +100,8 @@ public class Calculator implements Runnable {
 				if (nextColor != END_NUM) {
 					board.activeLight(nextColor);
 				}
-				sleep(500);
-			}
-			else {
+				sleep(difficulty.printSleepTime);
+			} else {
 				while (!board.isPressed()) {
 					sleep(1);
 				}

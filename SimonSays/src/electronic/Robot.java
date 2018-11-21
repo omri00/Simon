@@ -10,6 +10,7 @@ package electronic;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import logics.Calculator;
+import logics.Calculator.Difficulty;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,7 +30,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		electronicBoard = new ElectronicBoard();
-		calculator = new Calculator(RobotMap.SIMON.BUTTONS.length, electronicBoard);
+		calculator = new Calculator(RobotMap.SIMON.BUTTONS.length, electronicBoard, Difficulty.MEDIUM);
 	}
 
 	/**
