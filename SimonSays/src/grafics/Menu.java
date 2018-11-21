@@ -1,5 +1,6 @@
 package grafics;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -28,6 +29,7 @@ public class Menu extends JPanel {
 		medium = new JRadioButton("medium", true);
 		hard = new JRadioButton("hard", false);
 		ButtonGroup difficultyGroup = new ButtonGroup();
+		
 		difficultyGroup.add(easy);
 		difficultyGroup.add(medium);
 		difficultyGroup.add(hard);
@@ -35,8 +37,9 @@ public class Menu extends JPanel {
 		settingsPanel.add(easy);
 		settingsPanel.add(medium);
 		settingsPanel.add(hard);
+		
 		playButton.addActionListener((ActionEvent e) -> {
-			frame.add(new GraphicBoard(invertedButton.isSelected(), getDifficulty()));
+			frame.add(new GraphicBoard(invertedButton.isSelected(), getDifficulty()), BorderLayout.CENTER);
 			frame.remove(this);
 		});
 		exitButton.addActionListener((ActionEvent e) -> {
