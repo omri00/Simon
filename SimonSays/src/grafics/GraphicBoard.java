@@ -3,6 +3,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -12,7 +13,7 @@ import javax.swing.JPanel;
 import logics.BoardInterface;
 import logics.Calculator;
 
-public class Board extends JPanel implements BoardInterface {
+public class GraphicBoard extends JPanel implements BoardInterface {
 
 	ImagesHandler imagesHandler;
 	SoundHandler soundHandler;
@@ -23,7 +24,7 @@ public class Board extends JPanel implements BoardInterface {
 	Thread gameThread;
 	JFrame frame;
 
-	public Board(boolean inverted) {
+	public GraphicBoard(boolean inverted) {
 		soundHandler = new SoundHandler();
 		imagesHandler = new ImagesHandler(inverted);
 		calculator = new Calculator(4, this);
@@ -111,7 +112,7 @@ public class Board extends JPanel implements BoardInterface {
 	}
 
 	public static void main(String[] args) {
-		Board board = new Board(false);
+		GraphicBoard board = new GraphicBoard(false);
 
 	}
 }
