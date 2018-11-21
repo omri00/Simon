@@ -1,14 +1,10 @@
 package grafics;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import logics.BoardInterface;
@@ -17,6 +13,9 @@ import logics.Calculator.Difficulty;
 
 public class GraphicBoard extends JPanel implements BoardInterface {
 
+	/**
+	 * 
+	 */
 	ImagesHandler imagesHandler;
 	SoundHandler soundHandler;
 	Calculator calculator;
@@ -24,17 +23,12 @@ public class GraphicBoard extends JPanel implements BoardInterface {
 	int score = 0;
 	int pressedColor = ImagesHandler.NON_ACTIVE;
 	Thread gameThread;
-	JFrame frame;
 
 	public GraphicBoard(boolean inverted, Difficulty difficulty) {
 		soundHandler = new SoundHandler();
 		imagesHandler = new ImagesHandler(inverted);
 		calculator = new Calculator(4, this, difficulty);
 		gameThread = new Thread(calculator, "game");
-		frame = new JFrame("Simon");
-		frame.setBounds(0, 0, 500, 500);
-		frame.setMinimumSize(new Dimension(300, 300));
-		frame.add(this, BorderLayout.CENTER);
 		addMouseListener(new MouseAdapter() {
 
 			public void mousePressed(MouseEvent e) {
@@ -52,9 +46,7 @@ public class GraphicBoard extends JPanel implements BoardInterface {
 			}
 		});
 
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBackground(Color.gray);
-		frame.setVisible(true);
 
 	}
 
@@ -111,10 +103,5 @@ public class GraphicBoard extends JPanel implements BoardInterface {
 	@Override
 	public void defeat() {
 		soundHandler.playDeafet();
-	}
-
-	public static void main(String[] args) {
-		GraphicBoard board = new GraphicBoard(false, Difficulty.HARD);
-
 	}
 }
