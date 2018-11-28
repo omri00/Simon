@@ -59,7 +59,7 @@ public class GraphicBoard extends JPanel implements BoardInterface {
 
 	@Override
 	public void activeLight(int light) {
-		imagesHandler.selectImage(light);
+		imagesHandler.activeColor(light);
 		soundHandler.playColorSound(light);
 		repaint();
 	}
@@ -103,6 +103,6 @@ public class GraphicBoard extends JPanel implements BoardInterface {
 
 	@Override
 	public void defeat() {
-		soundHandler.playDeafet();
+		soundHandler.playDefeat();
 	}
 }
