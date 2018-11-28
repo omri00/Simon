@@ -2,6 +2,11 @@ package logics;
 
 import java.util.ArrayList;
 
+/**
+ * This class does all of the logic and calculations of the Simon game.
+ * 
+ * @author omri
+ */
 public class Calculator implements Runnable {
 	public static final int MAX_TURNS = 20;
 	public static final int VICTORY_NUM = 2;
@@ -9,12 +14,15 @@ public class Calculator implements Runnable {
 	public static final int CURRECT_NUM = 1;
 	public static final int END_NUM = -1;
 	private int buttonNum;
-	private ArrayList<Integer> colorOrder;
+	private ArrayList<Integer> lightOrder;
 	private int placeInTurn;
 	private boolean printing;
 	private BoardInterface board;
 	private Difficulty difficulty;
 
+	/**
+	 * This determines the duration of time each light light up when printing.
+	 */
 	public enum Difficulty {
 		EASY(750), MEDIUM(500), HARD(250);
 
@@ -29,86 +37,126 @@ public class Calculator implements Runnable {
 		}
 	}
 
-	public Calculator(int buttonNum, BoardInterface board, Difficulty difficulty) {
-		this.buttonNum = buttonNum;
+	/**
+	 * Construct a new Calculator using the number of light, the difficulty and the
+	 * {@link BoardInterface} that shows the game.
+	 * 
+	 * @param lightNum
+	 *            the number of lights.
+	 * @param board
+	 *            the {@link BoardInterface} the this show the result on.
+	 * @param difficulty
+	 *            the {@link Difficulty} of the game.
+	 */
+	public Calculator(int lightNum, BoardInterface board, Difficulty difficulty) {
+		this.buttonNum = lightNum;
 		this.board = board;
 		this.difficulty = difficulty;
-		colorOrder = new ArrayList<>();
-		chooseNextColor();
+		lightOrder = new ArrayList<>();
+		chooseNextLight();
 		placeInTurn = 0;
 		printing = true;
 	}
 
+	/**
+	 * @return the score which is the size of the order -1.
+	 */
 	public int getScore() {
-		return colorOrder.size() - 1;
+		return lightOrder.size() - 1;
 	}
 
-	public int getNextColor() {
-		if (colorOrder.size() == placeInTurn) {
+	/**
+	 * Return the next light in the order, if the order has ended return END_NUM and
+	 * make printing false.
+	 * 
+	 * @return the next light in the order.
+	 */
+	public int getNextLight() {
+		if (lightOrder.size() == placeInTurn) {
 			placeInTurn = 0;
 			printing = false;
 			return END_NUM;
 		}
 		placeInTurn++;
-		return colorOrder.get(placeInTurn - 1);
+		return lightOrder.get(placeInTurn - 1);
 	}
 
-	public int checkNextColor(int color) {
+	/**
+	 * Checks if the light that was given match the next light in the order. If the
+	 * order has ended picks a new light and make printing true.
+	 * 
+	 * @param light
+	 *            The light the player has pressed.
+	 * @return DEFEAT_NUM if it is wrong, CURRECT_NUM if it isn't the last light in
+	 *         the order and if it's correct, END_NUM if its the last one and
+	 *         VICTORY_NUm if the player won.
+	 */
+	public int checkNextLight(int light) {
 		int returnValue = DEFEAT_NUM;
-		if (colorOrder.get(placeInTurn) == color) {
+		if (lightOrder.get(placeInTurn) == light) { // The player was correct.
 			placeInTurn++;
 			returnValue = CURRECT_NUM;
 		}
-		if (colorOrder.size() == placeInTurn) {
-			if (colorOrder.size() == MAX_TURNS) {
+		if (lightOrder.size() == placeInTurn) { // The player won.
+			if (lightOrder.size() == MAX_TURNS) {
 				returnValue = VICTORY_NUM;
 			}
-			placeInTurn = 0;
+			placeInTurn = 0; // End of order.
 			printing = true;
-			chooseNextColor();
+			chooseNextLight();
 			returnValue = END_NUM;
-		}
-		if (returnValue == DEFEAT_NUM) {
 		}
 		return returnValue;
 	}
 
-	public void chooseNextColor() {
-		colorOrder.add((int) (Math.random() * buttonNum));
+	/**
+	 * Random a new num and adds it to the end of the order.
+	 */
+	public void chooseNextLight() {
+		lightOrder.add((int) (Math.random() * buttonNum));
 	}
 
+	/**
+	 * @return printings.
+	 */
 	public boolean isPrinting() {
 		return printing;
 	}
 
+	/**
+	 * reset the game.
+	 */
 	public void resetGame() {
-		colorOrder = new ArrayList<Integer>();
+		lightOrder = new ArrayList<Integer>();
 		printing = true;
 		placeInTurn = 0;
-		chooseNextColor();
+		chooseNextLight();
 	}
 
+	/**
+	 * Start the game.
+	 */
 	@Override
 	public void run() {
 		resetGame();
 		boolean gameRunning = true;
 		board.setScore(0);
 		while (gameRunning) {
-			int nextColor;
-			if (isPrinting()) {
-				nextColor = getNextColor();
-				if (nextColor != END_NUM) {
-					board.activeLight(nextColor);
+			int nextLight;
+			if (isPrinting()) { // Print the next light.
+				nextLight = getNextLight();
+				if (nextLight != END_NUM) {
+					board.activeLight(nextLight);
 				}
 				sleep(difficulty.printSleepTime);
 			} else {
-				while (!board.isPressed()) {
+				while (!board.isPressed()) { // Wait for the player to press something.
 					sleep(1);
 				}
 				int action;
-				nextColor = board.getPressedColor();
-				board.activeLight(nextColor);
-				action = checkNextColor(nextColor);
+				nextLight = board.getPressedLight();
+				board.activeLight(nextLight);
+				action = checkNextLight(nextLight);
 				if (action == Calculator.VICTORY_NUM) {
 					board.victory();
 					gameRunning = false;
@@ -122,7 +170,7 @@ public class Calculator implements Runnable {
 			board.deactiveAll();
 			sleep(250);
 		}
-		board.activeAll();
+		board.activeAll(); // blinking to show the end of the game.
 		sleep(250);
 		board.deactiveAll();
 		sleep(250);
@@ -131,6 +179,12 @@ public class Calculator implements Runnable {
 		board.deactiveAll();
 	}
 
+	/**
+	 * sleeps for the wanted time.
+	 * 
+	 * @param time
+	 *            in milliseconds.
+	 */
 	private void sleep(int time) {
 		try {
 			Thread.sleep(time);

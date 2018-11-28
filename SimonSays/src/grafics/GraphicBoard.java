@@ -92,7 +92,7 @@ public class GraphicBoard extends JPanel implements BoardInterface {
 	}
 
 	@Override
-	public int getPressedColor() {
+	public int getPressedLight() {
 		return pressedColor;
 	}
 

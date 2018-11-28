@@ -23,13 +23,15 @@ public class Menu extends JPanel {
 	public Menu() {
 		JButton playButton = new JButton("START!");
 		JButton exitButton = new JButton("Exit Game");
+		JButton helpButton = new JButton("Help");
+		JButton scoreButton = new JButton("Score Board");
 		JCheckBox invertedButton = new JCheckBox("Inverted");
 		JPanel settingsPanel = new JPanel();
 		easy = new JRadioButton("easy", false);
 		medium = new JRadioButton("medium", true);
 		hard = new JRadioButton("hard", false);
 		ButtonGroup difficultyGroup = new ButtonGroup();
-		
+
 		difficultyGroup.add(easy);
 		difficultyGroup.add(medium);
 		difficultyGroup.add(hard);
@@ -37,10 +39,12 @@ public class Menu extends JPanel {
 		settingsPanel.add(easy);
 		settingsPanel.add(medium);
 		settingsPanel.add(hard);
-		
+
 		playButton.addActionListener((ActionEvent e) -> {
-			frame.add(new GraphicBoard(invertedButton.isSelected(), getDifficulty()), BorderLayout.CENTER);
+			GraphicBoard board = new GraphicBoard(invertedButton.isSelected(), getDifficulty());
+			frame.add(board, BorderLayout.CENTER);
 			frame.remove(this);
+			frame.setVisible(true);
 		});
 		exitButton.addActionListener((ActionEvent e) -> {
 			frame.dispose();
@@ -50,9 +54,11 @@ public class Menu extends JPanel {
 		frame.setMinimumSize(new Dimension(300, 300));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-		this.setLayout(new GridLayout(3, 3));
+		this.setLayout(new GridLayout(5, 1));
 		this.add(playButton);
 		this.add(settingsPanel);
+		this.add(scoreButton);
+		this.add(helpButton);
 		this.add(exitButton);
 		frame.add(this);
 		frame.add(new GraphicBoard(false, Difficulty.EASY));

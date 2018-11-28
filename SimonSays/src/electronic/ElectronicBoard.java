@@ -42,11 +42,11 @@ public class ElectronicBoard implements BoardInterface{
 
 	@Override
 	public boolean isPressed() {
-		return getPressedColor() != -1;
+		return getPressedLight() != -1;
 	}
 
 	@Override
-	public int getPressedColor() {
+	public int getPressedLight() {
 		for (int i = 0; i < buttons.length; i++) {
 			if (buttons[i].get())
 				return i;
