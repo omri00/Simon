@@ -1,7 +1,6 @@
 package grafics;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -12,11 +11,14 @@ import logics.BoardInterface;
 import logics.Calculator;
 import logics.Calculator.Difficulty;
 
+/**
+ * This {@link JPanel} act as a {@link BoardInterface} that uses swing for
+ * graphic gui.
+ * 
+ * @author omri
+ *
+ */
 public class GraphicBoard extends JPanel implements BoardInterface {
-
-	/**
-	 * 
-	 */
 	ImagesHandler imagesHandler;
 	SoundHandler soundHandler;
 	Calculator calculator;
@@ -25,6 +27,14 @@ public class GraphicBoard extends JPanel implements BoardInterface {
 	int pressedColor = ImagesHandler.NON_ACTIVE;
 	Thread gameThread;
 
+	/**
+	 * Makes a new GraphicBaord.
+	 * 
+	 * @param inverted
+	 *            If the game is in inverted mode.
+	 * @param difficulty
+	 *            The {@link Difficulty} of the game.
+	 */
 	public GraphicBoard(boolean inverted, Difficulty difficulty) {
 		soundHandler = new SoundHandler();
 		imagesHandler = new ImagesHandler(inverted);
@@ -51,12 +61,19 @@ public class GraphicBoard extends JPanel implements BoardInterface {
 
 	}
 
+	/**
+	 * Draws everything on the screen.
+	 */
+	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		imagesHandler.draw(g);
 		g.drawString("" + score, imagesHandler.size, imagesHandler.size);
 	}
 
+	/**
+	 * active the image and sound.
+	 */
 	@Override
 	public void activeLight(int light) {
 		imagesHandler.activeColor(light);
@@ -64,24 +81,36 @@ public class GraphicBoard extends JPanel implements BoardInterface {
 		repaint();
 	}
 
+	/**
+	 * deactivate images.
+	 */
 	@Override
 	public void deactiveAll() {
 		imagesHandler.deactiveAll();
 		repaint();
 	}
 
+	/**
+	 * Activate images.
+	 */
 	@Override
 	public void activeAll() {
 		imagesHandler.activeAll();
 		repaint();
 	}
 
+	/**
+	 * Set the score.
+	 */
 	@Override
 	public void setScore(int score) {
 		this.score = score;
 		repaint();
 	}
 
+	/**
+	 * Return if the player has pressed on a light.
+	 */
 	@Override
 	public boolean isPressed() {
 		if (pressed) {
@@ -91,16 +120,25 @@ public class GraphicBoard extends JPanel implements BoardInterface {
 		return false;
 	}
 
+	/**
+	 * Returns which light was pressed.
+	 */
 	@Override
 	public int getPressedLight() {
 		return pressedColor;
 	}
 
+	/**
+	 * Plays victory sound.
+	 */
 	@Override
 	public void victory() {
 		soundHandler.playVictory();
 	}
 
+	/**
+	 * Plays defeat sound.
+	 */
 	@Override
 	public void defeat() {
 		soundHandler.playDefeat();

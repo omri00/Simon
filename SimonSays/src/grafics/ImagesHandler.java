@@ -31,7 +31,7 @@ public class ImagesHandler {
 	 * Makes a new ImagesHandler.
 	 * 
 	 * @param inverted
-	 *            if the game is in inverte mode.
+	 *            if the game is in inverted mode.
 	 */
 	public ImagesHandler(boolean inverted) {
 		for (int i = 0; i < colors.length; i++) {
