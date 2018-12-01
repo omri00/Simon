@@ -99,7 +99,7 @@ public class Calculator implements Runnable {
 		}
 		if (lightOrder.size() == placeInTurn) { // The player won.
 			if (lightOrder.size() == MAX_TURNS) {
-				returnValue = VICTORY_NUM;
+				return returnValue = VICTORY_NUM;
 			}
 			placeInTurn = 0; // End of order.
 			printing = true;
