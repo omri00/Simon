@@ -1,9 +1,13 @@
-package grafics;
+package graphics;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -11,6 +15,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 
 import logics.Calculator.Difficulty;
 
@@ -55,9 +60,28 @@ public class Menu extends JPanel {
 			frame.remove(this);
 			frame.setVisible(true);
 		});
+		helpButton.addActionListener(this::openHelpFrame);
 		exitButton.addActionListener((ActionEvent e) -> {
 			frame.dispose();
 		});
+	}
+
+	/**
+	 * Opens a new frame with the content of the help file.
+	 */
+	private void openHelpFrame(ActionEvent e) {
+		JFrame helpFrame = new JFrame("Help");
+		helpFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		helpFrame.setVisible(true);
+		JTextArea tarea = new JTextArea();
+		File file = new File("help");
+		helpFrame.add(tarea);
+		try {
+			BufferedReader input = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+			tarea.read(input, null);
+		} catch (Exception exc) {
+			exc.printStackTrace();
+		}
 	}
 
 	/**
@@ -65,12 +89,12 @@ public class Menu extends JPanel {
 	 */
 	private void initFrame() {
 		frame = new JFrame("Simon");
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		frame.setBounds(0, 0, 500, 500);
 		frame.setMinimumSize(new Dimension(300, 300));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.add(this);
-		frame.add(new GraphicBoard(false, Difficulty.EASY));
 	}
 
 	/**
@@ -118,6 +142,7 @@ public class Menu extends JPanel {
 	/**
 	 * Start the game.
 	 */
+
 	public static void main(String[] args) {
 		new Menu();
 	}
