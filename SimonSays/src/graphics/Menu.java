@@ -74,7 +74,7 @@ public class Menu extends JPanel {
 		helpFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		helpFrame.setVisible(true);
 		JTextArea tarea = new JTextArea();
-		File file = new File("help");
+		File file = new File("help.txt");
 		helpFrame.add(tarea);
 		try {
 			BufferedReader input = new BufferedReader(new InputStreamReader(new FileInputStream(file)));

@@ -1,0 +1,9 @@
+There is a circle that is divided into four parts, each part of a different color.
+
+At the beginning of the game one color turns on and then turns off, you need to click on the color that was lit.
+If you succeed, the color is turned on again, followed by another color, and you have to return after the color sequence. 
+If you succeed another color is added to the end of the sequence, and the sequence is presented from the beginning with the new color.
+The game is over when you get the sequence wrong.
+
+There are different difficulty levels (easy, medium and hard), you can choose the difficulty level in the menu.
+There is another game mode in which each color turns on except the color you have to click on. You can select this mode in the menu.
